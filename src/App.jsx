@@ -1,9 +1,14 @@
 import { AppRouter } from "./app/router"
+import { Navbar } from "./widgets/navbar"
+import { CitizensProvider } from "@/widgets/citizens-table";
 
 function App() {
 
   return (
-    <AppRouter/>
+    <CitizensProvider pageSize={50}>
+      <Navbar/>
+      <AppRouter/>
+    </CitizensProvider>
   )
 }
 

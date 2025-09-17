@@ -1,1 +1,1 @@
-export { default as CitizensPage } from "./ui/CitizensPage";
+export { CitizensPage } from "./ui/CitizensPage";
