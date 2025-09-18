@@ -118,7 +118,6 @@ export const CitizenFormModal = ({ isOpen, setOpen, citizen }) => {
         ...formData,
         hobbies: formData.hobbies.split(",").map((h) => h.trim()),
       });
-      console.log("Validated data:", parsed);
       setOpen(false);
     } catch (err) {
       if (err instanceof z.ZodError) {

@@ -24,10 +24,12 @@ cd frontend-test-task-npcirs
 
 ```bash
 bun install
+npm install
 ```
 
 3. Запуск в режиме разработке
 
 ```bash
 bun dev
+npm run dev
 ```

@@ -17,7 +17,6 @@ export const CitizenCard = ({ citizen }) => {
   if (!citizen) return null;
 
   const [isOpen, setIsOpen] = useState(false);
-  console.log(isOpen)
 
   const documents = safeObject(citizen.documents);
   const health = safeObject(citizen.health);
