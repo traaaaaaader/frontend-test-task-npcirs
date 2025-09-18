@@ -68,7 +68,7 @@ export const CitizensTable = () => {
   for (let i = 1; i <= totalPages; i++) pageNumbers.push(i);
 
   return (
-    <div>
+    <div className="flex flex-col overflow-hidden">
       <div className="mb-4 flex flex-wrap gap-2 items-center justify-between">
         <input
           type="text"
@@ -99,7 +99,7 @@ export const CitizensTable = () => {
           <option value="Доктор наук">Доктор наук</option>
         </select>
 
-        <div className="ml-auto flex items-center gap-2 text-text-muted">
+        <div className="ml-auto items-center gap-2 text-text-muted">
           <span className="text-primary font-medium">Всего граждан: {total}</span>
           <select
             className="border border-default p-2 rounded bg-surface text-text focus:ring-2 focus:ring-accent focus:border-accent hover:bg-accent hover:bg-opacity-10 transition-colors"
@@ -118,7 +118,7 @@ export const CitizensTable = () => {
         </div>
       </div>
 
-      <div className="overflow-auto h-[70vh] border border-default rounded">
+      <div className="flex-1 overflow-auto border border-default rounded">
         <table className="min-w-full text-sm">
           <thead className="bg-surface sticky top-0 z-10">
             <tr>
@@ -159,7 +159,6 @@ export const CitizensTable = () => {
         </table>
       </div>
 
-      {/* Пагинация */}
       <div className="mt-4 flex items-center justify-center gap-2 flex-wrap">
         <button
           className="px-3 py-1 border border-default rounded text-text-muted hover:bg-accent hover:bg-opacity-10 disabled:opacity-50 transition-colors"

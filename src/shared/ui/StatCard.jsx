@@ -1,4 +1,3 @@
-// StatCard.jsx
 import { Card } from "./Card";
 
 export const StatCard = ({ title, value, trend, trendValue, icon, iconBg = "bg-primary", iconColor = "text-white" }) => {

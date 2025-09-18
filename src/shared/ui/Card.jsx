@@ -1,7 +1,6 @@
-// Card.jsx
 export const Card = ({ title, children, className = "", headerAction = null, noPadding = false }) => {
   return (
-    <div className={`bg-surface rounded-xl shadow-sm border border-default ${className}`}>
+    <div className={`bg-surface rounded-xl shadow-sm border border-default p-6 ${className}`}>
       {title && (
         <div className="px-6 py-4 border-b border-default">
           <div className="flex items-center justify-between">
@@ -10,7 +9,7 @@ export const Card = ({ title, children, className = "", headerAction = null, noP
           </div>
         </div>
       )}
-      <div className={noPadding ? "" : "p-6"}>{children}</div>
+      {children}
     </div>
   );
 };

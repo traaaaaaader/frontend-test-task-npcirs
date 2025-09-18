@@ -1,4 +1,3 @@
-// DashboardEducation.jsx
 import { Card } from "@/shared/ui";
 
 export const DashboardEducation = ({ educationStats, totalCitizens }) => {

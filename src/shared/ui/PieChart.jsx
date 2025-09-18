@@ -1,4 +1,3 @@
-// PieChart.jsx
 import {
   PieChart as RePieChart,
   Pie,

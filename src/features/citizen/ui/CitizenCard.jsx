@@ -2,6 +2,7 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { safeNumber, safeString, safeArray, safeObject } from "../lib/formatters";
+import { CitizenFormModal } from "@/features/citizen-form"
 
 const formatDate = (date) => {
   if (!date) return "—";
@@ -15,124 +16,130 @@ const formatDate = (date) => {
 export const CitizenCard = ({ citizen }) => {
   if (!citizen) return null;
 
+  const [isOpen, setIsOpen] = useState(false);
+  console.log(isOpen)
+
   const documents = safeObject(citizen.documents);
   const health = safeObject(citizen.health);
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-xl font-bold text-primary">{safeString(citizen.fullName)}</h2>
-          <div className="text-text-muted text-sm">ID: {safeString(citizen.id)}</div>
-        </div>
-        <button
-          className="px-3 py-1 border rounded bg-primary text-white hover:bg-secondary"
-          onClick={() => {}}
-        >
-          Редактировать
-        </button>
-      </div>
-
-      <Section title="Основные сведения">
-        <Info label="Дата рождения" value={formatDate(citizen.birthDate)} />
-        <Info label="Пол" value={safeString(citizen.gender)} />
-        <Info label="Семейное положение" value={safeString(citizen.maritalStatus)} />
-        <Info label="Адрес" value={safeString(citizen.address)} />
-        <Info label="Телефон" value={safeString(citizen.phone)} />
-        <Info label="Email" value={safeString(citizen.email)} />
-      </Section>
-
-      <CollapsibleSection title="Работа и доход" data={safeArray(citizen.jobs)}>
-        {safeArray(citizen.jobs).length === 0 ? (
-          <p className="text-text-muted">Нет данных</p>
-        ) : (
-          <Table
-            headers={["Компания", "Должность", "Период", "Зарплата"]}
-            rows={citizen.jobs.map((job) => [
-              safeString(job.company),
-              safeString(job.position),
-              `${formatDate(job.startDate)} → ${job.endDate ? formatDate(job.endDate) : "по наст. время"}`,
-              <span className="text-success">{safeNumber(job.salary)} ₽</span>,
-            ])}
-          />
-        )}
-      </CollapsibleSection>
-
-      <CollapsibleSection title="Образование" data={safeArray(citizen.education)}>
-        {safeArray(citizen.education).length === 0 ? (
-          <p className="text-text-muted">Нет данных</p>
-        ) : (
-          <Table
-            headers={["Учреждение", "Степень", "Год"]}
-            rows={citizen.education.map((e) => [
-              safeString(e.institution),
-              safeString(e.degree),
-              safeString(e.year),
-            ])}
-          />
-        )}
-      </CollapsibleSection>
-
-      <CollapsibleSection title="Члены семьи" data={safeArray(citizen.family)}>
-        {safeArray(citizen.family).length === 0 ? (
-          <p className="text-text-muted">Нет данных</p>
-        ) : (
-          <Table
-            headers={["ФИО", "Родство", "Дата рождения"]}
-            rows={citizen.family.map((f) => [
-              safeString(f.fullName),
-              safeString(f.relation),
-              formatDate(f.birthDate),
-            ])}
-          />
-        )}
-      </CollapsibleSection>
-
-      <Section title="Документы">
-        <Info label="Паспорт" value={safeString(documents.passport)} />
-        <Info label="ИНН" value={safeString(documents.inn)} />
-        <Info label="СНИЛС" value={safeString(documents.snils)} />
-        <Info label="Вод. удостоверение" value={safeString(documents.driverLicense)} />
-      </Section>
-
-      <Section title="Здоровье">
-        <Info label="Группа крови" value={safeString(health.bloodType)} />
-        <Info label="Аллергии" value={safeArray(health.allergies).join(", ") || "Нет данных"} />
-        <Info
-          label="Хронические болезни"
-          value={safeArray(health.chronicDiseases).join(", ") || "Нет данных"}
-        />
-      </Section>
-
-      <CollapsibleSection title="Хобби" data={safeArray(citizen.hobbies)}>
-        {safeArray(citizen.hobbies).length === 0 ? (
-          <p className="text-text-muted">Нет данных</p>
-        ) : (
-          <div className="flex flex-wrap gap-2">
-            {citizen.hobbies.map((hobby, i) => (
-              <span key={i} className="px-2 py-1 rounded-full text-sm bg-accent text-primary">
-                {hobby}
-              </span>
-            ))}
+    <>
+      <CitizenFormModal isOpen={isOpen} setOpen={setIsOpen} citizen={citizen}/>
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-xl font-bold text-primary">{safeString(citizen.fullName)}</h2>
+            <div className="text-text-muted text-sm">ID: {safeString(citizen.id)}</div>
           </div>
-        )}
-      </CollapsibleSection>
+          <button
+            className="px-3 py-1 border rounded bg-primary text-white hover:bg-secondary"
+            onClick={() => {setIsOpen(true)}}
+          >
+            Редактировать
+          </button>
+        </div>
 
-      <CollapsibleSection title="Штрафы" data={safeArray(citizen.fines)}>
-        {safeArray(citizen.fines).length === 0 ? (
-          <p className="text-text-muted">Нет штрафов</p>
-        ) : (
-          <Table
-            headers={["Тип", "Сумма", "Дата"]}
-            rows={citizen.fines.map((fine) => [
-              safeString(fine.type),
-              <span className="text-error font-medium">{safeNumber(fine.amount)} ₽</span>,
-              formatDate(fine.date),
-            ])}
+        <Section title="Основные сведения">
+          <Info label="Дата рождения" value={formatDate(citizen.birthDate)} />
+          <Info label="Пол" value={safeString(citizen.gender)} />
+          <Info label="Семейное положение" value={safeString(citizen.maritalStatus)} />
+          <Info label="Адрес" value={safeString(citizen.address)} />
+          <Info label="Телефон" value={safeString(citizen.phone)} />
+          <Info label="Email" value={safeString(citizen.email)} />
+        </Section>
+
+        <CollapsibleSection title="Работа и доход" data={safeArray(citizen.jobs)}>
+          {safeArray(citizen.jobs).length === 0 ? (
+            <p className="text-text-muted">Нет данных</p>
+          ) : (
+            <Table
+              headers={["Компания", "Должность", "Период", "Зарплата"]}
+              rows={citizen.jobs.map((job) => [
+                safeString(job.company),
+                safeString(job.position),
+                `${formatDate(job.startDate)} → ${job.endDate ? formatDate(job.endDate) : "по наст. время"}`,
+                <span className="text-success">{safeNumber(job.salary)} ₽</span>,
+              ])}
+            />
+          )}
+        </CollapsibleSection>
+
+        <CollapsibleSection title="Образование" data={safeArray(citizen.education)}>
+          {safeArray(citizen.education).length === 0 ? (
+            <p className="text-text-muted">Нет данных</p>
+          ) : (
+            <Table
+              headers={["Учреждение", "Степень", "Год"]}
+              rows={citizen.education.map((e) => [
+                safeString(e.institution),
+                safeString(e.degree),
+                safeString(e.year),
+              ])}
+            />
+          )}
+        </CollapsibleSection>
+
+        <CollapsibleSection title="Члены семьи" data={safeArray(citizen.family)}>
+          {safeArray(citizen.family).length === 0 ? (
+            <p className="text-text-muted">Нет данных</p>
+          ) : (
+            <Table
+              headers={["ФИО", "Родство", "Дата рождения"]}
+              rows={citizen.family.map((f) => [
+                safeString(f.fullName),
+                safeString(f.relation),
+                formatDate(f.birthDate),
+              ])}
+            />
+          )}
+        </CollapsibleSection>
+
+        <Section title="Документы">
+          <Info label="Паспорт" value={safeString(documents.passport)} />
+          <Info label="ИНН" value={safeString(documents.inn)} />
+          <Info label="СНИЛС" value={safeString(documents.snils)} />
+          <Info label="Вод. удостоверение" value={safeString(documents.driverLicense)} />
+        </Section>
+
+        <Section title="Здоровье">
+          <Info label="Группа крови" value={safeString(health.bloodType)} />
+          <Info label="Аллергии" value={safeArray(health.allergies).join(", ") || "Нет данных"} />
+          <Info
+            label="Хронические болезни"
+            value={safeArray(health.chronicDiseases).join(", ") || "Нет данных"}
           />
-        )}
-      </CollapsibleSection>
-    </div>
+        </Section>
+
+        <CollapsibleSection title="Хобби" data={safeArray(citizen.hobbies)}>
+          {safeArray(citizen.hobbies).length === 0 ? (
+            <p className="text-text-muted">Нет данных</p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {citizen.hobbies.map((hobby, i) => (
+                <span key={i} className="px-2 py-1 rounded-full text-sm bg-accent text-primary">
+                  {hobby}
+                </span>
+              ))}
+            </div>
+          )}
+        </CollapsibleSection>
+
+        <CollapsibleSection title="Штрафы" data={safeArray(citizen.fines)}>
+          {safeArray(citizen.fines).length === 0 ? (
+            <p className="text-text-muted">Нет штрафов</p>
+          ) : (
+            <Table
+              headers={["Тип", "Сумма", "Дата"]}
+              rows={citizen.fines.map((fine) => [
+                safeString(fine.type),
+                <span className="text-error font-medium">{safeNumber(fine.amount)} ₽</span>,
+                formatDate(fine.date),
+              ])}
+            />
+          )}
+        </CollapsibleSection>
+      </div>
+    </>
   );
 };
 

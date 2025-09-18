@@ -6,8 +6,10 @@ function App() {
 
   return (
     <CitizensProvider pageSize={50}>
-      <Navbar/>
-      <AppRouter/>
+      <div className="flex flex-col h-screen">
+        <Navbar/>
+        <AppRouter/>
+      </div>
     </CitizensProvider>
   )
 }

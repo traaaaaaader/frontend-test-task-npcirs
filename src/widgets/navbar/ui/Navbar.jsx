@@ -10,7 +10,7 @@ export const Navbar = () => {
 
   return (
     <nav className="w-full bg-surface shadow-sm border-b border-default">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
         <div className="flex h-14 items-center justify-between">
           <div className="text-lg font-bold text-primary">MyApp</div>
 
