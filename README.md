@@ -16,8 +16,8 @@
 1. Клонируем репозиторий:
 
 ```bash
-git clone https://github.com/your-username/citizen-management-app.git
-cd citizen-management-app
+git clone https://github.com/traaaaaaader/frontend-test-task-npcirs.git
+cd frontend-test-task-npcirs
 ```
 
 2. Устанавливаем зависимости через Bun:
